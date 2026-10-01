@@ -1,0 +1,10 @@
+ALTER TABLE users ADD COLUMN program varchar(255);
+ALTER TABLE users ADD COLUMN enabled boolean NOT NULL DEFAULT true;
+CREATE TABLE user_interests (user_id bigint NOT NULL REFERENCES users(id), interest varchar(255) NOT NULL, PRIMARY KEY(user_id,interest));
+CREATE TABLE application_interests (application_id bigint NOT NULL REFERENCES membership_applications(id), interest varchar(255) NOT NULL, PRIMARY KEY(application_id,interest));
+CREATE TABLE favorite_games (user_id bigint NOT NULL REFERENCES users(id), game_id bigint NOT NULL REFERENCES games(id), PRIMARY KEY(user_id,game_id));
+ALTER TABLE suggestions ADD COLUMN author_id bigint REFERENCES users(id);
+CREATE INDEX idx_suggestions_author ON suggestions(author_id);
+ALTER TABLE gallery_items ADD COLUMN category varchar(255);
+CREATE INDEX idx_events_status_date ON events(status,event_date);
+CREATE INDEX idx_tournaments_status_date ON tournaments(status,start_date);

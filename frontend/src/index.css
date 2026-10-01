@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: #10071c;
+  --secondary-bg: #101018;
+  --foreground: #ffffff;
+  --card: #151520;
+  --card-foreground: #ffffff;
+  --primary: #f72585;
+  --primary-foreground: #ffffff;
+  --secondary: #1a1a2e;
+  --secondary-foreground: #a7a7b5;
+  --muted: #1e1e2e;
+  --muted-foreground: #a7a7b5;
+  --accent: #7209b7;
+  --accent-foreground: #ffffff;
+  --border: rgba(255,255,255,0.08);
+  --border-solid: #1e1e2e;
+  --ring: #f72585;
+  --radius: 14px;
+
+  --grad: linear-gradient(135deg, #f72585 0%, #b5179e 30%, #7209b7 65%, #4361ee 100%);
+  --grad-subtle: linear-gradient(135deg, rgba(247,37,133,0.15) 0%, rgba(67,97,238,0.15) 100%);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+* { scrollbar-width: thin; scrollbar-color: #2a2a4a transparent; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 4px; }
+
+/* Utility */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.grad-bg { background: var(--grad); }
+
+.glass {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+}
+
+.glow-pink { box-shadow: 0 0 30px rgba(247,37,133,0.2); }
+.glow-blue  { box-shadow: 0 0 30px rgba(67,97,238,0.2); }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-fadeup { animation: fadeUp 0.5s ease forwards; }
+
+/* Integration states retain the approved Pixel palette and geometry. */
+button,a,input,select,textarea { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), a { cursor:pointer; }
+button:disabled { opacity:.45;cursor:not-allowed; }
+:focus-visible { outline:2px solid #f72585;outline-offset:4px; }
+.skeleton { background:linear-gradient(100deg,#1e1e2e 20%,#30213f 45%,#1e1e2e 70%);background-size:250% 100%;animation:shimmer 1.8s ease infinite; }
+@keyframes shimmer { to { background-position:-200% 0; } }
+.pixel-dialog { color:white;background:#151520;border:1px solid rgba(247,37,133,.25);border-radius:20px;max-width:min(760px,calc(100vw - 32px));width:100%;max-height:90dvh;margin:auto;box-shadow:0 20px 100px #0009; }
+.pixel-dialog::backdrop {background:#080810dd;backdrop-filter:blur(12px);}
+img { max-width:100%; }
+main { min-width:0; }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important;} }
+@media(max-width:767px) { .pixel-admin main {padding:1rem;} }
+
+/* Final Figma visual QA: wrap real content without changing desktop geometry. */
+.pixel-card { min-width:0; overflow-wrap:anywhere; }
+.pixel-card:focus-within { border-color:rgba(247,37,133,.3); }
+.pixel-dialog { overflow-y:auto; }
+.pixel-dialog h2 { overflow-wrap:anywhere; }
+@media (hover:hover) {
+  nav button:hover { background-color:rgba(255,255,255,.04); }
+}
+@media(max-width:767px) {
+  button, a { touch-action:manipulation; }
+  button:not([role="presentation"]), a:not(:has(img)) { min-height:44px; }
+  .pixel-card h1,.pixel-card h2,.pixel-card h3 { overflow-wrap:anywhere; }
+}
+
+/* Full-page, transparent atmosphere; no interaction or content is obscured. */
+.home-atmosphere { position: relative; isolation: isolate; }
+.home-atmosphere > section { position: relative; z-index: 1; }
+.pixel-atmosphere { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: transparent; }
+.pixel-mote { position: absolute; top: 0; background: var(--pixel-color); border: 1px solid var(--pixel-color); box-shadow: 0 0 12px color-mix(in srgb, var(--pixel-color) 40%, transparent); animation: pixel-flight linear infinite; opacity: 0; }
+@keyframes pixel-flight {
+  0% { transform: translate3d(0,105vh,0) rotate(0); opacity: 0; }
+  12%,80% { opacity: .23; }
+  100% { transform: translate3d(var(--pixel-drift),-15vh,0) rotate(100deg); opacity: 0; }
+}
+.game-artwork { aspect-ratio: 4 / 5; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, #271036, #0c0c17 80%); border-bottom: 1px solid rgba(183,88,235,.12); }
+.game-artwork img { width: 100%; height: 100%; object-fit: contain; }
+.game-artwork-detail { height: min(60vh,560px); aspect-ratio: auto; margin-bottom: 1.5rem; border-radius: .75rem; }
+.game-tile { animation: fadeUp .45s ease both; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+@media (hover:hover) { .game-tile:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(114,9,183,.16); } }
+@media (max-width:640px) { .pixel-mote:nth-child(n+17) { display:none; } }
+@media (prefers-reduced-motion:reduce) { .pixel-atmosphere { display:none; } .game-tile:hover { transform:none; } }
+
+/* Pixel Cosmic: independent transparent ornament, concentrated at the edges. */
+.cosmic-layer { background:transparent; pointer-events:none; overflow:hidden; }
+.cosmic-layer-section { position:absolute; }
+.cosmic-layer-page { position:fixed; }
+.cosmic-haze { position:absolute; inset:0; background:radial-gradient(ellipse at 0% 25%,#4169ff0c,transparent 38%),radial-gradient(ellipse at 100% 70%,#d946ef0b,transparent 36%); }
+.cosmic-speck { position:absolute; background:var(--cosmic-color); will-change:transform,opacity; }
+.cosmic-distant { border-radius:50%; box-shadow:0 0 5px var(--cosmic-color); animation:cosmic-twinkle ease-in-out infinite alternate; }
+.cosmic-pixel { border:1px solid color-mix(in srgb,var(--cosmic-color) 65%,white); background:linear-gradient(135deg,color-mix(in srgb,var(--cosmic-color) 65%,white),var(--cosmic-color) 55%,color-mix(in srgb,var(--cosmic-color) 45%,#080810)); box-shadow:0 0 12px color-mix(in srgb,var(--cosmic-color) 30%,transparent),inset -1px -1px 0 #08081070; animation:cosmic-drift ease-in-out infinite alternate; }
+@keyframes cosmic-twinkle { from {opacity:.15;} to {opacity:.65;} }
+@keyframes cosmic-drift { from {transform:translate3d(0,-14px,0);opacity:.3;} to {transform:translate3d(10px,18px,0);opacity:.65;} }
+.cosmic-shooting-lane { position:absolute; width:220px; height:2px; transform:rotate(36deg); }
+.cosmic-shooting-star { position:relative; display:block; width:150px; height:1px; opacity:0; background:linear-gradient(90deg,transparent,#4169ff30 15%,#7C3AED 48%,#D946EF 75%,#f8e9ff); box-shadow:0 0 7px #a855f750; animation:cosmic-shoot linear infinite; }
+.cosmic-shooting-star::after { content:''; position:absolute; right:-1px; top:-1px; width:3px; height:3px; border-radius:50%; background:#fff2ff; box-shadow:0 0 5px #fff2ff,0 0 12px #D946EF,0 0 22px #7C3AED; }
+@keyframes cosmic-shoot {0% {opacity:0;transform:translate3d(-160px,0,0) scaleX(.5);} 2% {opacity:.85;} 9% {opacity:0;transform:translate3d(230px,0,0) scaleX(1);} 100% {opacity:0;transform:translate3d(230px,0,0) scaleX(1);} }
+.pixel-cosmic { background:transparent; --grad:linear-gradient(115deg,#4169FF 0%,#7C3AED 30%,#D946EF 68%,#EC4899 100%); }
+.pixel-cosmic .pixel-card { background:rgba(20,18,34,.78)!important;backdrop-filter:blur(10px);border-color:rgba(168,85,247,.16); }
+.pixel-cosmic .grad-text { background-image:var(--grad); }
+.cosmic-eyebrow {color:#c084fc;font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;}
+.cosmic-hero {padding-top:4rem;padding-bottom:6rem;}
+.cosmic-hero h1 {font-size:clamp(5rem,12vw,10rem);letter-spacing:-.055em;}
+.cosmic-hero p {text-wrap:balance;}
+@media(max-width:640px) { .cosmic-speck:nth-of-type(n+29),.cosmic-shooting-lane:nth-last-child(-n+2) {display:none;} .cosmic-pixel {max-width:5px;max-height:5px;} .cosmic-shooting-lane {width:110px;} .cosmic-shooting-star {width:80px;} .cosmic-hero {min-height:85svh;} }
+@media(prefers-reduced-motion:reduce) { .cosmic-layer {display:none;} }
+
+.cosmic-hero > .pointer-events-none > div { opacity: .035; }
+
+.home-game-catalogue { --grad:linear-gradient(135deg,#f72585,#7209b7,#4361ee); }
+
+/* Scale the official hero mark; trim only its transparent vertical padding. */
+.pixel-hero-logo { display:block; position:relative; width:clamp(260px,40vw,480px); max-width:100%; aspect-ratio:2 / 1; overflow:hidden; flex-shrink:0; }
+.pixel-hero-logo img { position:absolute; width:100%; height:auto; left:0; top:50%; transform:translateY(-50%); object-fit:contain; }
+
+.pixel-social-link { display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:16px; border:1px solid rgba(168,85,247,.24); background:rgba(124,58,237,.07); transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; }
+.pixel-social-link:hover { transform:translateY(-3px); border-color:rgba(236,72,153,.65); box-shadow:0 6px 24px rgba(124,58,237,.16); }
+.pixel-social-link:focus-visible { outline:2px solid #EC4899; outline-offset:4px; }
+@media(prefers-reduced-motion:reduce) { .pixel-social-link { transition:none; } .pixel-social-link:hover { transform:none; } }

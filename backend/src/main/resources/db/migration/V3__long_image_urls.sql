@@ -1,0 +1,5 @@
+ALTER TABLE events ALTER COLUMN image_url TYPE TEXT;
+ALTER TABLE events ALTER COLUMN short_description TYPE TEXT;
+ALTER TABLE games ALTER COLUMN image_url TYPE TEXT;
+ALTER TABLE gallery_items ALTER COLUMN image_url TYPE TEXT;
+ALTER TABLE team_members ALTER COLUMN image_url TYPE TEXT;

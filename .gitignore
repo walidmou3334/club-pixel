@@ -1,0 +1,23 @@
+references/
+**/node_modules/
+**/dist/
+**/target/
+**/.env
+**/.env.*
+!**/.env.example
+*.log
+.playwright/
+
+# Local browser validation output and fixtures
+visual-qa/
+validation-*.png
+
+.idea/
+backups/
+
+**/application.properties
+
+/.env
+/frontend/.env
+
+frontend/src/imports/
