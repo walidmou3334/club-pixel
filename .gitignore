@@ -21,3 +21,5 @@ backups/
 /frontend/.env
 
 frontend/src/imports/
+
+!**/src/test/resources/application.properties
